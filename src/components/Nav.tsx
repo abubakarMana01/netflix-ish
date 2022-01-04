@@ -63,9 +63,13 @@ const NavContainer = styled.nav`
 	display: flex;
 	align-items: center;
 	padding: 1.5rem;
-	z-index: 2;
+	z-index: 5;
 
 	transition: background-color 300ms ease-out;
+
+	@media (max-width: 425px) {
+		padding: 1.5rem 20px;
+	}
 `;
 
 const Logo = styled.div`
@@ -73,8 +77,10 @@ const Logo = styled.div`
 		object-fit: contain;
 		height: 80px;
 
-		@media (max-width: 375px) {
+		@media (max-width: 425px) {
 			height: 60px;
+			object-fit: cover;
+			margin-left: -5px;
 		}
 	}
 `;
@@ -126,5 +132,9 @@ const NavRight = styled.div`
 			width: 23px;
 			height: 23px;
 		}
+	}
+
+	@media (max-width: 425px) {
+		display: none;
 	}
 `;

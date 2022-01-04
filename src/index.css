@@ -5,7 +5,27 @@
 }
 
 body {
-	font-family: "Work Sans", "Mulish", "Lato", "Roboto", Helvetica, sans-serif;
+	font-family: "Work Sans", "Mulish", "Lato", "Roboto", Ubuntu, "Segoe UI",
+		Helvetica, sans-serif;
 	background-color: rgb(0, 0, 0);
 	color: #fff;
+}
+
+body::-webkit-scrollbar {
+	width: 12px;
+}
+
+body::-webkit-scrollbar-thumb {
+	background-color: rgba(255, 255, 255, 0.9);
+	border-left: 2px solid #000;
+	border-right: 2px solid #000;
+	border-radius: 5px;
+}
+body::-webkit-scrollbar-track {
+	background: #000;
+}
+
+main {
+	width: 100%;
+	overflow-x: hidden;
 }

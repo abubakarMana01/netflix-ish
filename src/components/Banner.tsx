@@ -67,9 +67,9 @@ export default function Banner() {
 	};
 
 	return isLoading ? (
-		<div style={{ height: "484px" }}>
+		<LoadingContainer>
 			<Loading />
-		</div>
+		</LoadingContainer>
 	) : (
 		<Container
 			style={{
@@ -126,12 +126,25 @@ export default function Banner() {
 	);
 }
 
+const LoadingContainer = styled.div`
+	height: 484px;
+
+	@media (min-height: 960px) {
+		height: 55vh;
+	}
+`;
+
 const Container = styled.section`
-	height: 448px;
+	height: 484px;
 	position: relative;
 	background-size: cover;
 	background-color: #242424;
 	margin-bottom: 3rem;
+	width: 100%;
+
+	@media (min-height: 960px) {
+		height: 55vh;
+	}
 `;
 
 const Content = styled.div`
@@ -176,6 +189,16 @@ const Content = styled.div`
 
 	.MuiRating-root .MuiRating-iconActive {
 		color: #5ac55a;
+	}
+
+	@media (max-width: 425px) {
+		width: 100%;
+		margin: 0 20px;
+		top: 1.5rem;
+
+		h1 {
+			font-size: clamp(1.8rem, 2rem, 2.5rem);
+		}
 	}
 `;
 

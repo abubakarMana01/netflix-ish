@@ -1,18 +1,21 @@
 import { useContext, useState } from "react";
-import { Logout } from "@mui/icons-material";
+import { Edit, Logout } from "@mui/icons-material";
 import { Avatar } from "@mui/material";
 import styled from "styled-components";
 import { auth } from "../config/firebase";
 import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
 import { AuthContext } from "../contexts/AuthProvider";
+import useStorage from "../hooks/useStorage";
 
 export default function Profile() {
-	const [isLoading, setIsLoading] = useState(false);
-
+	const navigate = useNavigate();
 	const { user } = useContext(AuthContext);
 
-	const navigate = useNavigate();
+	const [isLoading, setIsLoading] = useState(false);
+	const [file, setFile] = useState(null);
+
+	// const { percentage, error, url } = useStorage(file);
 
 	const handleSignout = async () => {
 		try {
@@ -20,8 +23,19 @@ export default function Profile() {
 			await auth.signOut();
 			navigate("/");
 		} catch (err: any) {
-			setIsLoading(false);
 			console.log(err.message);
+			setIsLoading(false);
+		}
+	};
+
+	const handleFileChange = (e: React.ChangeEvent<any>) => {
+		const selectedFile = e.target?.files[0];
+		const types = ["image/png", "image/jpeg"];
+		if (selectedFile && types.includes(selectedFile.type)) {
+			setFile(selectedFile);
+			console.log(selectedFile.type);
+		} else {
+			alert("Please select a valid image format");
 		}
 	};
 
@@ -37,7 +51,17 @@ export default function Profile() {
 					<h1>Edit Profile</h1>
 
 					<ProfileInfo>
-						<Avatar />
+						<ProfileLeft>
+							<Avatar />
+							<EditProfilePicContainer>
+								<label>
+									<span>
+										<Edit />
+									</span>
+									<input type="file" onChange={handleFileChange} />
+								</label>
+							</EditProfilePicContainer>
+						</ProfileLeft>
 
 						<ProfileRight>
 							<ProfileEmailContainer>
@@ -78,6 +102,57 @@ const Content = styled.div`
 const ProfileInfo = styled.div`
 	display: flex;
 `;
+
+const ProfileLeft = styled.div`
+	position: relative;
+	width: 40px;
+	height: 40px;
+`;
+
+const EditProfilePicContainer = styled.div`
+	position: absolute;
+	right: -5px;
+	bottom: -5px;
+	background-color: rgb(227, 9, 20);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+	cursor: pointer;
+	transition: background-color 300ms ease;
+	width: 28px;
+	height: 28px;
+
+	&:hover {
+		background-color: rgba(227, 9, 20, 0.8);
+	}
+
+	svg {
+		width: 15px;
+		height: 15px;
+	}
+
+	label input {
+		display: none;
+		opacity: 0;
+	}
+
+	label {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+		width: 100%;
+		height: 100%;
+	}
+
+	span {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+`;
+
 const ProfileRight = styled.div`
 	flex: 1;
 	min-height: 200px;

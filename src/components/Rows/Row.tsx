@@ -89,7 +89,7 @@ export default function Row({ title, fetchUrl, isLargeRow = false }: RowTypes) {
 			<h2>{title}</h2>
 
 			<ContentContainer isLargeRow={isLargeRow}>
-				{moviesData.map(movie => (
+				{moviesData.map((movie) => (
 					<RowItem key={movie.id} isLargeRow={isLargeRow} movie={movie} />
 				))}
 			</ContentContainer>
@@ -104,9 +104,15 @@ const RowContainer = styled.section<{ isLargeRow: boolean }>`
 	margin-bottom: 4rem;
 
 	h2 {
-		font-family: "Mulish";
-		font-size: 1.5rem;
+		font-family: "Mulish", "Lato", "Roboto", Ubuntu, "Segoe UI", Helvetica,
+			sans-serif;
+		font-size: clamp(1.1rem, 5vw, 1.5rem);
 		margin-bottom: 2rem;
+	}
+
+	@media (max-width: 425px) {
+		width: 100%;
+		margin: 1rem 20px;
 	}
 `;
 
@@ -142,7 +148,7 @@ const PosterContainer = styled.div<{ isLargeRow: boolean }>`
 	margin-right: 15px;
 	height: ${({ isLargeRow }) => (isLargeRow ? "300px" : "200px")};
 	width: ${({ isLargeRow }) => (isLargeRow ? "200px" : "300px")};
-	border-radius: 7px;
+	border-radius: 10px;
 	overflow: hidden;
 	position: relative;
 	display: flex;
@@ -152,7 +158,7 @@ const PosterContainer = styled.div<{ isLargeRow: boolean }>`
 	img {
 		height: 100%;
 		position: absolute;
-		transition: transform 100ms ease-out;
+		transition: transform 200ms ease-in-out;
 		transform: scale(1.1);
 	}
 `;
@@ -184,7 +190,7 @@ const PosterDetails = styled.div`
 	z-index: 3;
 	padding: 10px;
 	transform: translateY(69%);
-	transition: transform 100ms ease-out;
+	transition: transform 200ms ease-in-out;
 
 	h3 {
 		overflow: hidden;
